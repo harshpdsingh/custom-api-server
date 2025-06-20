@@ -146,6 +146,5 @@ Built with 💻 Next.js, ❤️ MongoDB, and 🚀 love for learning!
 
 ---
 
-## 📝 License
+[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](./UNLICENSE)
 
-This project is open source and available under the [MIT License](LICENSE).
