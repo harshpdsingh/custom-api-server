@@ -1,10 +1,10 @@
-import { connectToDB } from '@/lib/db';
+import { connectToDatabase } from '@/lib/db';
 import User from '@/models/user';
 
 // GET /api/users → Fetch all users
 export async function GET() {
   try {
-    await connectToDB();
+    await connectToDatabase();
     const users = await User.find();
     return Response.json(users);
   } catch (error) {
@@ -19,11 +19,11 @@ export async function POST(request) {
   try {
     
     const { name, email } = body;
-
-    await connectToDB();
+    await connectToDatabase();
     const newUser = await User.create({ name, email });
+    console.log('Request Body:', { name, email }) // instead of whole body
 
-    return Response.json(newUser, { status: 201 });
+    return Response.json(newUser.toObject(), { status: 201 });
   } catch (error) {
     console.error('Error creating user:', error);
     return Response.json({ error: 'Failed to create user' }, { status: 400 });

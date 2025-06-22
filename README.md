@@ -1,82 +1,67 @@
 # 🔐 User Manager – Custom API Server with MongoDB and Next.js
 
-This is a fullstack CRUD app built using **Next.js (App Router)** and **MongoDB Atlas**. It demonstrates how to build and consume your own REST APIs using Next.js API routes with a lightweight frontend UI.
+This is a fullstack CRUD app built using **Next.js (App Router)** and **MongoDB Atlas**. It includes:
+
+* REST API endpoints for user management
+* Integrated database using Mongoose
+* Fully tested with **Jest** and **Supertest** for unit, integration, and mocked API tests
 
 ---
 
 ## 📌 APIs Created & Their Functionality
 
-| Method | Endpoint         | Description             |
-|--------|------------------|-------------------------|
-| GET    | /api/users       | Get all users           |
-| POST   | /api/users       | Create a new user       |
-| PUT    | /api/users/:id   | Update a user by ID     |
-| DELETE | /api/users/:id   | Delete a user by ID     |
+| Method | Endpoint        | Description       |
+| ------ | --------------- | ----------------- |
+| GET    | /api/users      | Get all users     |
+| POST   | /api/users      | Create a new user |
+| GET    | /api/users/\:id | Get user by ID    |
+| PUT    | /api/users/\:id | Update user by ID |
+| DELETE | /api/users/\:id | Delete user by ID |
 
 ---
 
-## 🛠️ Database Integration (MongoDB)
+## 🛠️ Tech Stack
 
-- **Database**: MongoDB Atlas (cloud)
-- **Library Used**: [Mongoose](https://mongoosejs.com/)
-- Connection handled via a `connectToDB()` function inside `lib/mongodb.js`
-
-### 🧪 Setup
-
-1. Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) and create a cluster.
-2. Whitelist your IP (`0.0.0.0/0` for testing) and create a database user.
-3. Copy your connection string and create a `.env.local` file in your root directory.
-
-```
-MONGODB_URI=your-mongodb-uri-here
-```
+* **Framework**: Next.js (App Router)
+* **Database**: MongoDB Atlas
+* **ODM**: Mongoose
+* **Testing**: Jest, Supertest, mongodb-memory-server
 
 ---
 
-## 🚀 How to Run the Server
+## 🤝 How to Run the App
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/harshpdsingh/custom-api-server.git
+https://github.com/harshpdsingh/custom-api-server.git
 cd custom-api-server
 
 # 2. Install dependencies
 npm install
 
-# 3. Create environment file
-touch .env.local
-
-# Add this inside .env.local
+# 3. Create a .env.local file and add:
 MONGODB_URI=your-mongodb-uri
 
-# 4. Run the development server
+# 4. Start the development server
 npm run dev
 ```
 
-Visit the app at `http://localhost:3000`
+Visit: `http://localhost:3000`
 
 ---
 
-## 💻 How to Run the Frontend Locally (Optional)
+## 💻 Frontend UI
 
-> No separate setup needed — frontend and backend are combined using **Next.js App Router**
+> Integrated inside Next.js app
 
-- Go to `http://localhost:3000`
-- You'll see:
-  - A form to **Add a User**
-  - A list of users with options to **Edit** or **Delete**
+* Form to **Create User**
+* Table to **View/Edit/Delete Users**
 
 ---
 
-## 📬 How to Interact with the API
+## 🔢 API Examples
 
-You can test API endpoints using **Postman**, **curl**, or directly from the browser.
-
----
-
-### ➕ POST `/api/users`
-
-**Request:**
+### POST /api/users
 
 ```json
 {
@@ -85,22 +70,7 @@ You can test API endpoints using **Postman**, **curl**, or directly from the bro
 }
 ```
 
-**Response:**
-
-```json
-{
-  "_id": "665c789b83ef49b7ff23ba33",
-  "name": "Harsh",
-  "email": "harsh@example.com",
-  "__v": 0
-}
-```
-
----
-
-### 🔁 PUT `/api/users/:id`
-
-**Request:**
+### PUT /api/users/\:id
 
 ```json
 {
@@ -109,43 +79,76 @@ You can test API endpoints using **Postman**, **curl**, or directly from the bro
 }
 ```
 
----
+### DELETE /api/users/\:id
 
-### 🗑 DELETE `/api/users/:id`
+No body required.
 
-No request body required. Just send a DELETE request.
-
----
-
-## 🧪 Example Test with curl
+### Test with curl:
 
 ```bash
-# Create a user
 curl -X POST http://localhost:3000/api/users \
   -H "Content-Type: application/json" \
-  -d '{"name": "hasrh", "email": "harsh@example.com"}'
-
-# Get all users
-curl http://localhost:3000/api/users
-
-# Update a user
-curl -X PUT http://localhost:3000/api/users/<id> \
-  -H "Content-Type: application/json" \
-  -d '{"name": "Updated harsh", "email": "updated@example.com"}'
-
-# Delete a user
-curl -X DELETE http://localhost:3000/api/users/<id>
+  -d '{"name":"Harsh","email":"harsh@example.com"}'
 ```
 
 ---
 
-## 🙋 Author
+## 🔮 How to Run Tests
 
-**Harsh Prasad Singh**  
-Built with 💻 Next.js, ❤️ MongoDB, and 🚀 love for learning!
+```bash
+# Run all tests
+npm run test
+
+# Run tests with coverage
+npm run test:coverage
+```
 
 ---
 
-## 📝 License
+## 🌟 Testing Frameworks Used
 
-This project is open source and available under the [MIT License](LICENSE).
+* **Jest**: Testing framework
+* **Supertest**: HTTP assertions
+* **mongodb-memory-server**: In-memory MongoDB for integration tests
+
+---
+
+## 🔍 What Is Tested?
+
+### ✅ Unit Tests:
+
+* Database connection logic (`lib/db.js`)
+* User model logic (`models/User.js`)
+
+### ✅ Integration Tests:
+
+* CRUD operations with real database (in-memory)
+* User flow end-to-end
+
+### ✅ API Route Tests (mocked + non-mocked):
+
+* POST /api/users
+* GET /api/users
+* PUT /api/users/\:id
+* DELETE /api/users/\:id
+* GET /api/users/\:id
+
+---
+
+## 📊 Test Coverage Screenshot
+
+![Test Coverage](./coverage/coverage-summary.png)
+
+
+---
+
+## 👤 Author
+
+**Harsh Prasad Singh**
+Built with 💻 Next.js, ❤️ MongoDB, and ✨ love for clean code and testing!
+
+---
+
+## 📜 License
+
+[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](./UNLICENSE)

@@ -1,4 +1,4 @@
-import { connectToDB } from '@/lib/db';
+import { connectToDatabase } from '@/lib/db';
 import User from '@/models/user';
 
 
@@ -6,7 +6,7 @@ import User from '@/models/user';
 export async function GET(_, props) {
   const params = await props.params;
   try {
-    await connectToDB();
+    await connectToDatabase();
     const user = await User.findById(params.id);
 
     if (!user) {
@@ -24,7 +24,7 @@ export async function PUT(request, props) {
   const params = await props.params;
   try {
     const { name, email } = await request.json();
-    await connectToDB();
+    await connectToDatabase();
 
     const updatedUser = await User.findByIdAndUpdate(
       params.id,
@@ -46,7 +46,7 @@ export async function PUT(request, props) {
 export async function DELETE(_, props) {
   const params = await props.params;
   try {
-    await connectToDB();
+    await connectToDatabase();
     const deletedUser = await User.findByIdAndDelete(params.id);
 
     if (!deletedUser) {
