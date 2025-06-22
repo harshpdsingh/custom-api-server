@@ -109,6 +109,11 @@ npm run test:coverage
 
 * **Jest**: Testing framework
 * **Supertest**: HTTP assertions
+* **mongodb-m<<<<<<< HEAD
+## 🌟 Testing Frameworks Used
+
+* **Jest**: Testing framework
+* **Supertest**: HTTP assertions
 * **mongodb-memory-server**: In-memory MongoDB for integration tests
 
 ---
@@ -152,3 +157,4 @@ Built with 💻 Next.js, ❤️ MongoDB, and ✨ love for clean code and testing
 ## 📜 License
 
 [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](./UNLICENSE)
+
