@@ -142,7 +142,7 @@ npm run test:coverage
 
 ## 📊 Test Coverage Screenshot
 
-![Test Coverage](./coverage/coverage-summary.png)
+![Test Coverage](./images/coverage-summary.png)
 
 
 ---
@@ -153,6 +153,83 @@ npm run test:coverage
 Built with 💻 Next.js, ❤️ MongoDB, and ✨ love for clean code and testing!
 
 ---
+
+
+## 🤪 Keploy API Testing Integration
+
+This project uses **Keploy** (v2.6.14) for AI-powered API test generation and execution.
+
+### ✅ Keploy Setup & Execution
+
+1. **Install Keploy (if not already):**
+
+   ```bash
+   curl --silent --location "https://dl.keploy.io/linux/install.sh" | bash
+   ```
+
+2. **Run in Record Mode:**
+
+   This captures real API traffic during manual testing.
+
+   ```bash
+   sudo -E keploy record -c "npm run dev" --record-timer 2m
+   ```
+
+   - `--record-timer 2m`: Runs for 2 minutes while you manually hit endpoints (e.g., using Postman).
+   - Generated tests will be saved in `keploy/test-set-0/`.
+
+3. **Run in Test Mode:**
+
+   This replays the recorded test cases and validates responses.
+
+   ```bash
+   sudo -E keploy test -c "npm run dev" --delay 25
+   ```
+
+   - `--delay 25`: Gives the app 25 seconds to start before testing begins.
+
+---
+
+### 📄 Test Coverage Report
+
+After testing, Keploy generates a **coverage.txt** file inside the root directory. This includes:
+
+- Total tests run
+- Number of passed/failed tests
+- Header mismatches (like ETag or Date)
+- Missing responses or timeouts
+
+> **Note:** ETag-related test failures were resolved by marking dynamic headers as global noise using `--global-header` or inside the config.
+
+---
+
+### 🧠 Intelligent Features Used
+
+- **Test case generation from real user traffic** (via `record` mode)
+- **Noise filtering of unstable headers**
+- **Automatic mocking of dependencies (like MongoDB)**
+
+---
+
+### 📸 Keploy Test Coverage Screenshot
+
+![Keploy Test Coverage Report](./images/keploy-coverage.png)
+
+---
+
+### 📁 Generated Files by Keploy
+
+- `keploy/test-set-0/`: Captured test cases
+- `keploy/mocks/`: Auto-generated dependency mocks
+- `coverage.txt`: Optional text report if `--coverage-report-path` is used
+
+---
+
+### 🔗 Resources
+
+- [Keploy Docs](https://docs.keploy.io/)
+- [OpenAPI Schema Used](./openapi.yaml)
+
 
 ## 📜 License
 
