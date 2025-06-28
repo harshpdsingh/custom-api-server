@@ -155,7 +155,7 @@ Built with 💻 Next.js, ❤️ MongoDB, and ✨ love for clean code and testing
 ---
 
 
-## 🤪 Keploy API Testing Integration
+## Keploy API Testing Integration
 
 This project uses **Keploy** (v2.6.14) for AI-powered API test generation and execution.
 
