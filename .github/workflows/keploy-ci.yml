@@ -1,31 +1,28 @@
-name: Keploy API Testing
+name: Keploy API Test
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
+on: [push, pull_request]
 
 jobs:
   keploy-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⬇️ Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: 🟢 Set up Node
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - name: 📦 Install Dependencies
-        run: npm install
+      - name: Install dependencies
+        run: npm ci
 
-      - name: 🐰 Install Keploy
+      - name: Install Keploy
         run: |
           curl --silent --location "https://dl.keploy.io/linux/install.sh" | bash
+          echo "$HOME/.keploy/bin" >> $GITHUB_PATH
 
-      - name: 🚀 Run Keploy Test
+      - name: Run Keploy tests
         run: |
           sudo -E keploy test -c "npm run dev" --delay 25
