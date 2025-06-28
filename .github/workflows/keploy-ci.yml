@@ -23,8 +23,12 @@ jobs:
           curl --silent --location "https://dl.keploy.io/linux/install.sh" | bash
           echo "$HOME/.keploy/bin" >> $GITHUB_PATH
 
+      - name: Verify Keploy Installation
+        run: |
+          ls -la $HOME/.keploy/bin/
+          which keploy || echo "Keploy not found in PATH"
+          $HOME/.keploy/bin/keploy --version
+
       - name: Run Keploy Tests
         run: |
-          echo "PATH=$HOME/.keploy/bin:$PATH" >> $GITHUB_ENV
-          source ~/.bashrc || true
-          keploy test -c "npm run dev" --delay 25
+          $HOME/.keploy/bin/keploy test -c "npm run dev" --delay 25
