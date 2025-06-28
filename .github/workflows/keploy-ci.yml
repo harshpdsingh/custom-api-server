@@ -20,14 +20,38 @@ jobs:
 
       - name: Install Keploy
         run: |
+          echo "Installing Keploy..."
           curl --silent --location "https://dl.keploy.io/linux/install.sh" | bash
-          echo "$HOME/.keploy/bin" >> $GITHUB_PATH
+          echo "Installation completed, checking directory..."
+          ls -la $HOME/ | grep keploy || echo "No keploy directory found"
+          if [ -d "$HOME/.keploy/bin" ]; then
+            echo "Keploy bin directory exists"
+            ls -la $HOME/.keploy/bin/
+            echo "$HOME/.keploy/bin" >> $GITHUB_PATH
+          else
+            echo "Keploy bin directory not found, trying alternative installation..."
+            # Try manual installation
+            mkdir -p $HOME/.keploy/bin
+            cd $HOME/.keploy/bin
+            curl -L "https://github.com/keploy/keploy/releases/latest/download/keploy_linux_amd64.tar.gz" -o keploy.tar.gz
+            tar -xzf keploy.tar.gz
+            chmod +x keploy
+            echo "$HOME/.keploy/bin" >> $GITHUB_PATH
+          fi
 
       - name: Verify Keploy Installation
         run: |
-          ls -la $HOME/.keploy/bin/
-          which keploy || echo "Keploy not found in PATH"
-          $HOME/.keploy/bin/keploy --version
+          echo "Checking PATH..."
+          echo $PATH
+          echo "Looking for keploy binary..."
+          find $HOME -name "keploy" -type f 2>/dev/null || echo "No keploy binary found"
+          if [ -f "$HOME/.keploy/bin/keploy" ]; then
+            echo "Found keploy binary, checking version..."
+            $HOME/.keploy/bin/keploy --version
+          else
+            echo "Keploy binary not found at expected location"
+            exit 1
+          fi
 
       - name: Run Keploy Tests
         run: |
